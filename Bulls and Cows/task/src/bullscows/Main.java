@@ -4,14 +4,16 @@ import java.util.*;
 
 public class Main {
     static int length = 0;
+    static int letterCount = 0;
     static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
         startGame();
-        
+
     }
 
     private static String generateRandom(int length) {
         ArrayList<Integer> list = new ArrayList<Integer>();
+        Character[] chars = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
         String number = "";
         for (int i = 0; i < 10; i++) {
             list.add(i);
@@ -20,7 +22,7 @@ public class Main {
             Collections.shuffle(list);
         }
 
-        if (length > 10) {
+        if (length > 36) {
             System.out.println("Error: can't generate a secret number with a length of " + length
                     + " because there aren't enough unique digits");
         } else {
@@ -29,6 +31,27 @@ public class Main {
             }
         }
         return number;
+
+//        int place = 1;
+//        Random random = new Random();
+//        StringBuilder secretCode = new StringBuilder();
+//        while (place <= length) {
+//            if (place == 1) {
+//                int num = random.nextInt(9) + 1;
+//                secretCode.append(num);
+//                place++;
+//            } else {
+//                while (true) {
+//                    int num = random.nextInt(9);
+//                    if (!secretCode.toString().contains("" + num)) {
+//                        secretCode.append(num);
+//                        place++;
+//                        break;
+//                    }
+//
+//                }
+//            }
+//        }
     }
 
     private static void startGame(){
@@ -37,8 +60,11 @@ public class Main {
         int cow = 0;
         System.out.println("Please, enter the secret code's length:");
         length = scanner.nextInt();
+        System.out.println("Input the number of possible symbols in the code:");
+        letterCount = scanner.nextInt();
         String randomNumber = generateRandom(length);
         boolean isAnswer = false;
+        System.out.println("The secret is prepared: **** (0-9, a-f).");
         System.out.println("Okay, let's start a game!");
         while (!isAnswer){
             System.out.printf("Turn %d:\n", turn);
