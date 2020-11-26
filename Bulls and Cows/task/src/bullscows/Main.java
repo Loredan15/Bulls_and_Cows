@@ -1,5 +1,6 @@
 package bullscows;
 
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class Main {
@@ -27,11 +28,13 @@ public class Main {
             Collections.shuffle(listNumbers);
         }
 
-        if (length > 36) {
+        if (length == 0){
+            System.out.println(" Error: ");
+        } else if(length > 36){
             System.out.println("Error: can't generate a secret number with a length of " + length
                     + " because there aren't enough unique digits");
-        } else if (letterCount > 10) {
-            for (int i = 0; i < letterCount-10; i++) {
+        }else if(letterCount > 10){
+            for (int i = 0; i < letterCount - 10; i++) {
                 currentChar[i] = chars[i];
                 lastLetter = chars[i];
                 listNumbers.add(currentChar[i]);
@@ -39,8 +42,12 @@ public class Main {
         }
         Collections.shuffle(listNumbers);
 
-        for (int i = 0; i < length; i++) {
-            number += listNumbers.get(i);
+        if (length > letterCount) {
+            System.out.println("Error: ");
+        } else {
+            for (int i = 0; i < length; i++) {
+                number += listNumbers.get(i);
+            }
         }
 
         return number;
@@ -72,12 +79,38 @@ public class Main {
         int bull = 0;
         int cow = 0;
         System.out.println("Please, enter the secret code's length:");
-        length = scanner.nextInt();
+        try {
+            length = scanner.nextInt();
+        } catch (Exception e) {
+            System.out.printf("Error: %s isn't a valid number.\n", length);
+        }
+        if (length == 0){
+            System.out.println("Error: ");
+            System.exit(0);
+        }
+
+
+
         System.out.println("Input the number of possible symbols in the code:");
-        letterCount = scanner.nextInt();
+        try {
+            letterCount = scanner.nextInt();
+        } catch (Exception e) {
+            System.out.printf("Error: %s isn't a valid number.\n", letterCount);
+        }
+
+        if (length > letterCount){
+            System.out.println("Error: ");
+            System.exit(0);
+        }
+        if (letterCount > 36){
+            System.out.println("Error: ");
+            System.exit(0);
+        }
+
+
         String randomNumber = generateRandom(length);
         boolean isAnswer = false;
-        String stars="";
+        String stars = "";
         for (int i = 0; i < length; i++) {
             stars += "*";
         }
